@@ -591,7 +591,11 @@ module Syskit
                     raise ArgumentError, "there is already a process server registered as #{name}, call #remove_process_server first"
                 end
 
+                STDOUT.puts "Creating process-server #{name}, #{client}"
+                #binding.pry if name == "localhost"
+
                 ps = ProcessServerConfig.new(name, client, log_dir)
+                STDOUT.write "Registering process_server: #{name}"
                 ps.callback = ps.loader.on_project_load do |project|
                     app.project_define_from_orogen(project)
                 end
